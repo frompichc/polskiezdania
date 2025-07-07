@@ -65,9 +65,9 @@ async function cargarFrases() {
     if (textoBuscado) {
       const regex = new RegExp(`(${textoBuscado})`, 'gi');
       const fraseResaltada = frase.replace(regex, '<strong>$1</strong>');
-      li.innerHTML = `${index + 1}. ${fraseResaltada}`;
+      li.innerHTML = fraseResaltada;
     } else {
-      li.textContent = `${index + 1}. ${frase}`;
+      li.textContent = frase;
     }
 
     lista.appendChild(li);

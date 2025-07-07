@@ -1,57 +1,46 @@
-/* Estilos base para PC y móviles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 1rem;
   margin: 0;
-  padding: 0 15px;
-  color: #333;
 }
 
 .container {
-  max-width: 700px;
-  margin: 40px auto;
-  background: white;
-  padding: 25px 30px;
-  border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 25px;
-  font-weight: 700;
-  color: #222;
+  margin-bottom: 1.5rem;
 }
 
-/* Contenedor filtro + botón */
-.filtro-boton {
+.controls {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   justify-content: center;
-  margin-bottom: 25px;
-  flex-wrap: wrap; /* Para que en pantallas pequeñas se envuelvan */
+  margin-bottom: 1.5rem;
 }
 
-select, input[type="text"], button {
-  padding: 10px 14px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1.8px solid #888;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-select:focus, input[type="text"]:focus {
-  border-color: #007BFF;
+select,
+input[type="text"],
+button {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 button {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
-  cursor: pointer;
-  font-weight: 600;
   border: none;
-  min-width: 130px;
+  cursor: pointer;
 }
 
 button:hover {
@@ -59,71 +48,39 @@ button:hover {
 }
 
 #lista-frases {
-  list-style: decimal inside;
-  padding: 0;
-  margin: 0 auto;
-  max-width: 650px;
+  list-style-position: inside;
+  padding-left: 0;
 }
 
 #lista-frases li {
-  padding: 12px 15px;
-  margin-bottom: 12px;
-  background-color: #f0f8ff;
-  border-radius: 6px;
-  line-height: 1.4;
-  font-size: 1rem;
+  background-color: #eef7ff;
+  margin: 0.3rem 0;
+  padding: 0.7rem;
+  border-radius: 8px;
 }
 
-/* Texto en negrita para coincidencias */
-.highlight {
-  font-weight: 700;
-  background-color: #fffa91;
+.bold {
+  font-weight: bold;
+  background-color: #ffff99;
 }
 
-/* Mensajes de error o vacío en rojo */
-#lista-frases li.mensaje-error {
+/* Mensaje de error */
+#lista-frases li.error {
   color: red;
   font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
 }
 
-/* --- Media Queries --- */
-
-/* Para móviles pequeños (ancho máximo 400px, típico Moto G56) */
-@media (max-width: 400px) {
-  body {
-    padding: 0 10px;
+/* Responsive */
+@media (max-width: 480px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .container {
-    margin: 20px auto;
-    padding: 20px 15px;
-  }
-
-  .filtro-boton {
-    gap: 8px;
-  }
-
-  select, input[type="text"], button {
-    font-size: 14px;
-    padding: 8px 10px;
-  }
-
+  select,
+  input[type="text"],
   button {
-    min-width: 100px;
-  }
-
-  #lista-frases li {
-    font-size: 0.9rem;
-    padding: 10px 12px;
-  }
-
-  /* Mensajes de error o vacío en rojo */
-  #lista-frases li.mensaje-error {
-    color: red;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
+    width: 100%;
+    font-size: 1.1rem;
   }
 }

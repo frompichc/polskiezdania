@@ -32,7 +32,7 @@ async function cargarFrases() {
     .from('frases_polaco')
     .select('frase')
     .order(orden.columna, { ascending: orden.asc })
-    .limit(200); // más resultados para filtro/búsqueda local
+    .limit(200);
 
   if (nivelSeleccionado) {
     query = query.eq('nivel', nivelSeleccionado);
@@ -41,7 +41,7 @@ async function cargarFrases() {
   const { data, error } = await query;
 
   if (error) {
-    lista.innerHTML = `<li class="mensaje-error">Błąd: ${error.message}</li>`;
+    lista.innerHTML = `<li class="error">Błąd: ${error.message}</li>`;
     return;
   }
 
@@ -54,22 +54,21 @@ async function cargarFrases() {
   }
 
   if (frasesFiltradas.length === 0) {
-    lista.innerHTML = '<li class="mensaje-error">Brak pasujących fraz.</li>';
+    lista.innerHTML = '<li class="error">Brak pasujących fraz.</li>';
     return;
   }
 
   lista.innerHTML = '';
-  frasesFiltradas.forEach(({ frase }, index) => {
+  frasesFiltradas.forEach(({ frase }) => {
     const li = document.createElement('li');
 
+    let fraseHTML = frase;
     if (textoBuscado) {
       const regex = new RegExp(`(${textoBuscado})`, 'gi');
-      const fraseResaltada = frase.replace(regex, '<strong>$1</strong>');
-      li.innerHTML = fraseResaltada;
-    } else {
-      li.textContent = frase;
+      fraseHTML = frase.replace(regex, '<span class="bold">$1</span>');
     }
 
+    li.innerHTML = fraseHTML;
     lista.appendChild(li);
   });
 }

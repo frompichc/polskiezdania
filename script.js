@@ -9,30 +9,22 @@ const recargarBtn = document.getElementById('recargar');
 const filtroNivel = document.getElementById('filtro-nivel');
 const buscadorFrase = document.getElementById('buscador-frase');
 
-function getOrdenAleatorio() {
-  const opciones = [
-    { columna: 'creado_en', asc: false },
-    { columna: 'nivel', asc: true },
-    { columna: 'frase', asc: true },
-    { columna: 'frase', asc: false },
-    { columna: 'nivel', asc: false },
-    { columna: 'creado_en', asc: true },
-  ];
-  return opciones[Math.floor(Math.random() * opciones.length)];
+function resaltarCoincidencias(texto, busqueda) {
+  if (!busqueda) return texto;
+  const regex = new RegExp(`(${busqueda})`, 'gi');
+  return texto.replace(regex, '<strong>$1</strong>');
 }
 
 async function cargarFrases() {
   lista.innerHTML = '<li>Ładowanie...</li>';
 
-  const orden = getOrdenAleatorio();
   const nivelSeleccionado = filtroNivel.value;
   const textoBuscado = buscadorFrase.value.trim().toLowerCase();
 
   let query = supabase
     .from('frases_polaco')
-    .select('frase')
-    .order(orden.columna, { ascending: orden.asc })
-    .limit(200);
+    .select('frase, nivel')
+    .limit(300); // Traemos varias para filtrar aleatoriamente
 
   if (nivelSeleccionado) {
     query = query.eq('nivel', nivelSeleccionado);
@@ -41,34 +33,34 @@ async function cargarFrases() {
   const { data, error } = await query;
 
   if (error) {
-    lista.innerHTML = `<li class="error">Błąd: ${error.message}</li>`;
+    lista.innerHTML = `<li class="mensaje-error">Błąd: ${error.message}</li>`;
     return;
   }
 
   let frasesFiltradas = data;
 
+  // Filtrado por buscador
   if (textoBuscado) {
-    frasesFiltradas = data.filter(({ frase }) =>
+    frasesFiltradas = frasesFiltradas.filter(({ frase }) =>
       frase.toLowerCase().includes(textoBuscado)
     );
   }
 
+  // Si no hay frases coincidentes
   if (frasesFiltradas.length === 0) {
-    lista.innerHTML = '<li class="error">Brak pasujących fraz.</li>';
+    lista.innerHTML = '<li class="mensaje-error">Brak pasujących fraz.</li>';
     return;
   }
 
+  // Barajar y mostrar 10 aleatorias
+  const frasesAleatorias = frasesFiltradas.sort(() => Math.random() - 0.5).slice(0, 300);
+
+  // Mostrar con numeración y resaltado
   lista.innerHTML = '';
-  frasesFiltradas.forEach(({ frase }) => {
+  frasesAleatorias.forEach(({ frase }, index) => {
     const li = document.createElement('li');
-
-    let fraseHTML = frase;
-    if (textoBuscado) {
-      const regex = new RegExp(`(${textoBuscado})`, 'gi');
-      fraseHTML = frase.replace(regex, '<span class="bold">$1</span>');
-    }
-
-    li.innerHTML = fraseHTML;
+    const resaltada = resaltarCoincidencias(frase, textoBuscado);
+    li.innerHTML = `<span class="numero"></span> ${resaltada}`;
     lista.appendChild(li);
   });
 }

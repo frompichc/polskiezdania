@@ -86,23 +86,28 @@ button:hover {
   margin: 0.3rem 0;
   padding: 0.7rem;
   border-radius: 8px;
-  display: flex;
-  align-items: flex-start;
+  /* Eliminamos display: flex aquí para un flujo de texto más predecible */
+  display: flex; 
+  /* align-items: flex-start; */
   position: relative;
   text-align: left;
-  padding-right: 70px; /* Espacio para los nuevos botones de acción */
+  padding-right: 70px; /* Espacio para los botones de acción */
   min-height: 40px;
+  word-break: break-word; /* Para que palabras muy largas no desborden */
+  overflow-wrap: break-word; /* Equivalente más moderno */
+  overflow: hidden; /* Asegura que los floats internos no desborden */
 }
 
 .list-item-content {
-  flex-grow: 1;
+  flex-grow: 1; /* Este ya no es tan relevante sin display: flex en el padre */
   flex-shrink: 1;
   overflow: visible;
   white-space: normal;
   text-overflow: unset;
-  display: flex;
-  align-items: flex-start;
-  gap: 5px;
+  /* Volvemos a display: block para un flujo de texto normal */
+  display: block; 
+  /* Eliminamos gap si no hay flex */
+  /* gap: 5px; */
 }
 
 .numero-frase {
@@ -112,9 +117,18 @@ button:hover {
   align-self: flex-start;
 }
 
-#lista-frases li strong {
+/* Modificación de la clase .bold para el resaltado */
+.bold {
   font-weight: bold;
-  background-color: #ffff99;
+  background-color: #FFEA00; /* Amarillo vibrante para el resaltado */
+  padding: 2px 0; /* Un poco de padding vertical para el fondo */
+  line-height: 1.5em; /* Asegura que el fondo del resaltado sea uniforme */
+  box-decoration-break: clone; /* CRUCIAL: Para que el fondo se aplique a cada línea si el texto se envuelve */
+  -webkit-box-decoration-break: clone; /* Prefijo para navegadores WebKit */
+  margin: 0; /* Asegura que no haya márgenes inesperados */
+  display: inline; /* Asegura el comportamiento de texto en línea */
+  white-space: normal; /* Permite que el texto se envuelva dentro del resaltado */
+  word-break: normal; /* Evita que el propio elemento resaltado rompa palabras internas */
 }
 
 .nivel-badge {
@@ -127,58 +141,58 @@ button:hover {
   white-space: nowrap;
   display: inline-block;
   flex-shrink: 0;
-  align-self: flex-start;
+  align-self: flex-start; /* Esto ya no es tan relevante sin display: flex en el padre */
 }
 
 /* Contenedor para los botones de acción (Editar y Eliminar) */
 .actions {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    gap: 5px; /* Espacio entre los botones de editar y eliminar */
-    z-index: 10; /* Asegura que estén por encima del texto si hay superposición */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 5px; /* Espacio entre los botones de editar y eliminar */
+  z-index: 10; /* Asegura que estén por encima del texto si hay superposición */
 }
 
 /* Estilos base para los botones de acción (editar y eliminar) */
 /* El padding y font-size se ajustan para botones con solo icono */
 .btn.editar-btn,
 .btn.eliminar-btn {
-    background: none;
-    border: none;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em; /* Tamaño del icono */
-    color: #555; /* Color por defecto de los iconos */
-    transition: color 0.2s ease, background-color 0.2s ease;
-    display: flex; /* Asegura que el icono esté centrado si hay padding */
-    align-items: center;
-    justify-content: center;
+  background: none;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em; /* Tamaño del icono */
+  color: #555; /* Color por defecto de los iconos */
+  transition: color 0.2s ease, background-color 0.2s ease;
+  display: flex; /* Asegura que el icono esté centrado si hay padding */
+  align-items: center;
+  justify-content: center;
 }
 
 .btn.editar-btn {
-    color: #007bff; /* Azul para el icono de editar */
+  color: #007bff; /* Azul para el icono de editar */
 }
 
 .btn.editar-btn:hover {
-    color: #0056b3;
-    background-color: #e6f2ff; /* Fondo sutil al pasar el ratón */
+  color: #0056b3;
+  background-color: #e6f2ff; /* Fondo sutil al pasar el ratón */
 }
 
 .btn.eliminar-btn {
-    color: #dc3545; /* Rojo para el icono de eliminar */
+  color: #dc3545; /* Rojo para el icono de eliminar */
 }
 
 .btn.eliminar-btn:hover {
-    color: #bd2130;
-    background-color: #ffe6e6; /* Fondo sutil al pasar el ratón */
+  color: #bd2130;
+  background-color: #ffe6e6; /* Fondo sutil al pasar el ratón */
 }
 
 /* Ajuste para el icono dentro del botón */
 .btn i {
-    font-size: 1em; /* El tamaño del icono se controla desde .btn.editar-btn, etc. */
+  font-size: 1em; /* El tamaño del icono se controla desde .btn.editar-btn, etc. */
 }
 
 /* Mensaje de error / Mensajes generales */
@@ -295,46 +309,45 @@ button:hover {
 /* --- Estilos específicos para el Modal de Confirmación de Eliminación --- */
 
 .modal-content .modal-actions {
-    display: flex;
-    justify-content: flex-end; /* Alinea los botones a la derecha */
-    gap: 10px; /* Espacio entre los botones */
-    margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end; /* Alinea los botones a la derecha */
+  gap: 10px; /* Espacio entre los botones */
+  margin-top: 1.5rem;
 }
 
 .modal-content .modal-actions button {
-    width: auto; /* Permite que los botones no ocupen todo el ancho */
-    padding: 10px 20px;
-    font-size: 1rem;
-    /* Anula el display: block del botón general para que estén en línea */
-    display: inline-block;
+  width: auto; /* Permite que los botones no ocupen todo el ancho */
+  padding: 10px 20px;
+  font-size: 1rem;
+  /* Anula el display: block del botón general para que estén en línea */
+  display: inline-block;
 }
 
 .btn.btn-secondary {
-    background-color: #6c757d; /* Gris para "Anuluj" */
+  background-color: #6c757d; /* Gris para "Anuluj" */
 }
 
 .btn.btn-secondary:hover {
-    background-color: #5a6268;
+  background-color: #5a6268;
 }
 
 .btn.btn-danger {
-    background-color: #dc3545; /* Rojo para "Usuń" */
+  background-color: #dc3545; /* Rojo para "Usuń" */
 }
 
 .btn.btn-danger:hover {
-    background-color: #bd2130;
+  background-color: #bd2130;
 }
 
 /* --- Estilos para deshabilitar botones de la lista cuando un modal está abierto --- */
 body.modal-open #lista-frases .actions {
-    display: none; /* OCULTA COMPLETAMENTE LOS BOTONES DE ACCIÓN EN LA LISTA */
-    /* Las propiedades de opacidad y cursor ya no son necesarias con display: none; */
+  display: none; /* OCULTA COMPLETAMENTE LOS BOTONES DE ACCIÓN EN LA LISTA */
 }
 
 /* Asegurarse de que los botones del modal sí sean interactivos (por si acaso el selector de arriba es demasiado amplio) */
 .modal-content button {
-    pointer-events: auto; /* Re-habilitar eventos de ratón para botones dentro de modales */
-    cursor: pointer;
+  pointer-events: auto; /* Re-habilitar eventos de ratón para botones dentro de modales */
+  cursor: pointer;
 }
 
 
@@ -378,19 +391,19 @@ body.modal-open #lista-frases .actions {
   }
 
   .actions {
-      position: static; /* Quita el posicionamiento absoluto en móviles */
-      transform: none;
-      margin-top: 10px; /* Espacio entre el texto y los botones */
-      width: 100%; /* Ocupa todo el ancho disponible */
-      justify-content: flex-end; /* Alinea los botones a la derecha */
+    position: static; /* Quita el posicionamiento absoluto en móviles */
+    transform: none;
+    margin-top: 10px; /* Espacio entre el texto y los botones */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    justify-content: flex-end; /* Alinea los botones a la derecha */
   }
 
   .btn.editar-btn,
   .btn.eliminar-btn {
-      width: auto; /* Permite que los botones tengan su tamaño natural */
-      padding: 8px 12px; /* Ajusta el padding para que sean más fáciles de tocar */
-      font-size: 1.2em; /* Haz los iconos un poco más grandes para táctil */
-      margin: 0 5px; /* Pequeño margen entre ellos */
+    width: auto; /* Permite que los botones tengan su tamaño natural */
+    padding: 8px 12px; /* Ajusta el padding para que sean más fáciles de tocar */
+    font-size: 1.2em; /* Haz los iconos un poco más grandes para táctil */
+    margin: 0 5px; /* Pequeño margen entre ellos */
   }
 
   .modal-content {
@@ -406,10 +419,10 @@ body.modal-open #lista-frases .actions {
 
   /* Responsive para el modal de confirmación */
   .modal-content .modal-actions {
-      flex-direction: column; /* Apila los botones en pantallas pequeñas */
-      align-items: stretch;
+    flex-direction: column; /* Apila los botones en pantallas pequeñas */
+    align-items: stretch;
   }
   .modal-content .modal-actions button {
-      width: 100%; /* Botones de ancho completo en móviles */
+    width: 100%; /* Botones de ancho completo en móviles */
   }
 }

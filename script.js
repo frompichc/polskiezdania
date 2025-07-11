@@ -36,10 +36,14 @@ const mensajeEliminacion = document.getElementById('mensaje-eliminacion');
 
 let numeroFrase = 0; // Variable para controlar el número de la frase
 
+// Función de resaltado de coincidencias
 function resaltarCoincidencias(texto, busqueda) {
   if (!busqueda) return texto;
-  const regex = new RegExp(`(${busqueda})`, 'gi');
-  return texto.replace(regex, '<strong>$1</strong>');
+  // Escapar caracteres especiales en la búsqueda para la RegExp
+  const escapedBusqueda = busqueda.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escapedBusqueda})`, 'gi');
+  // Usamos <strong class="bold"> para que los estilos CSS se apliquen correctamente
+  return texto.replace(regex, '<strong class="bold">$1</strong>');
 }
 
 async function cargarFrases() {
@@ -84,6 +88,7 @@ async function cargarFrases() {
   frasesAleatorias.forEach(({ id, frase, nivel }) => {
     numeroFrase++; // Incrementa para cada frase
     const li = document.createElement('li');
+    // Usamos resaltarCoincidencias con la clase "bold"
     const resaltada = resaltarCoincidencias(frase, textoBuscado);
     li.innerHTML = `
       <span class="list-item-content">

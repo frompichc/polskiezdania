@@ -5,10 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Polski zdania</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
   <div class="container">
     <h1>Polski zdania</h1>
+
+    <div class="add-phrase-section">
+      <h2>Dodaj nową frazę</h2>
+      <div class="add-phrase-controls">
+        <input type="text" id="nueva-frase-input" placeholder="Wpisz nową frazę..." />
+        <select id="nivel-nueva-frase">
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+          <option value="C1">C1</option>
+        </select>
+        <button id="guardar-frase-btn">Zapisz frazę</button>
+      </div>
+      <p id="mensaje-guardar" class="mensaje"></p>
+    </div>
+    <hr>
+
     <div class="controls">
       <select id="filtro-nivel">
         <option value="">Wszystkie poziomy</option>
@@ -23,6 +42,45 @@
     </div>
     <ol id="lista-frases"></ol>
   </div>
+
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>Edytuj frazę</h2>
+      <input type="hidden" id="edit-frase-id">
+      <div class="form-group">
+        <label for="edit-frase-input">Fraza:</label>
+        <input type="text" id="edit-frase-input">
+      </div>
+      <div class="form-group">
+        <label for="edit-nivel-select">Poziom:</label>
+        <select id="edit-nivel-select">
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+          <option value="C1">C1</option>
+        </select>
+      </div>
+      <button id="guardar-cambios-btn">Zapisz zmiany</button>
+      <p id="mensaje-edicion" class="mensaje"></p>
+    </div>
+  </div>
+
+  <div id="delete-confirm-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button delete-close-button">&times;</span>
+      <h2>Potwierdź usunięcie</h2>
+      <p>Czy na pewno chcesz usunąć frazę: "<span id="frase-a-eliminar"></span>"?</p>
+      <input type="hidden" id="delete-frase-id">
+      <div class="modal-actions">
+        <button id="cancelar-eliminar-btn" class="btn btn-secondary">Anuluj</button>
+        <button id="confirmar-eliminar-btn" class="btn btn-danger">Usuń</button>
+      </div>
+      <p id="mensaje-eliminacion" class="mensaje"></p>
+    </div>
+  </div>
+
   <script type="module" src="script.js"></script>
 </body>
 </html>
